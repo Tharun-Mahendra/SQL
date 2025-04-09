@@ -1,0 +1,526 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.41 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> create database sqlpractise;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use sqlpractise;
+Database changed
+mysql> show tables;
+Empty set (0.02 sec)
+
+mysql> create table students(name varchar(30),id int not null primary key,address varchar(50),marks int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> show tables;
++-----------------------+
+| Tables_in_sqlpractise |
++-----------------------+
+| students              |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> desc students;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(30) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into students(marks,id,name,address)values(78,101,'arun','hyd');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into students values('harsha',102,'vizag',84);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into students values('charan',103,'pune',64),('rithik',104,'delhi',98),('ganesh',105,'mumbai',73);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| arun   | 101 | hyd     |    78 |
+| harsha | 102 | vizag   |    84 |
+| charan | 103 | pune    |    64 |
+| rithik | 104 | delhi   |    98 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select name from students;
++--------+
+| name   |
++--------+
+| arun   |
+| harsha |
+| charan |
+| rithik |
+| ganesh |
++--------+
+5 rows in set (0.00 sec)
+
+mysql> select name,marks from students;
++--------+-------+
+| name   | marks |
++--------+-------+
+| arun   |    78 |
+| harsha |    84 |
+| charan |    64 |
+| rithik |    98 |
+| ganesh |    73 |
++--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from students where id=103;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| charan | 103 | pune    |    64 |
++--------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into students values('sam',102,'chennai',54);
+ERROR 1062 (23000): Duplicate entry '102' for key 'students.PRIMARY'
+mysql> update students set address='kolkata' where id=101;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| arun   | 101 | kolkata |    78 |
+| harsha | 102 | vizag   |    84 |
+| charan | 103 | pune    |    64 |
+| rithik | 104 | delhi   |    98 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table students add number int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++--------+-----+---------+-------+--------+
+| name   | id  | address | marks | number |
++--------+-----+---------+-------+--------+
+| arun   | 101 | kolkata |    78 |   NULL |
+| harsha | 102 | vizag   |    84 |   NULL |
+| charan | 103 | pune    |    64 |   NULL |
+| rithik | 104 | delhi   |    98 |   NULL |
+| ganesh | 105 | mumbai  |    73 |   NULL |
++--------+-----+---------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update students set number=142578;
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from students;
++--------+-----+---------+-------+--------+
+| name   | id  | address | marks | number |
++--------+-----+---------+-------+--------+
+| arun   | 101 | kolkata |    78 | 142578 |
+| harsha | 102 | vizag   |    84 | 142578 |
+| charan | 103 | pune    |    64 | 142578 |
+| rithik | 104 | delhi   |    98 | 142578 |
+| ganesh | 105 | mumbai  |    73 | 142578 |
++--------+-----+---------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update students set number=984756 where id=101;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++--------+-----+---------+-------+--------+
+| name   | id  | address | marks | number |
++--------+-----+---------+-------+--------+
+| arun   | 101 | kolkata |    78 | 984756 |
+| harsha | 102 | vizag   |    84 | 142578 |
+| charan | 103 | pune    |    64 | 142578 |
+| rithik | 104 | delhi   |    98 | 142578 |
+| ganesh | 105 | mumbai  |    73 | 142578 |
++--------+-----+---------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> desc students;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(30) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
+| number  | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table students modify column address varchar(40);
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc students;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(30) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(40) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
+| number  | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table students drop column number;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| arun   | 101 | kolkata |    78 |
+| harsha | 102 | vizag   |    84 |
+| charan | 103 | pune    |    64 |
+| rithik | 104 | delhi   |    98 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> delete from students where id=103;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from students;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| arun   | 101 | kolkata |    78 |
+| harsha | 102 | vizag   |    84 |
+| rithik | 104 | delhi   |    98 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select sum(marks) from students;
++------------+
+| sum(marks) |
++------------+
+|        333 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select avg(marks) from students;
++------------+
+| avg(marks) |
++------------+
+|    83.2500 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(marks) from students;
++--------------+
+| count(marks) |
++--------------+
+|            4 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select min(marks) from students;
++------------+
+| min(marks) |
++------------+
+|         73 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select max(marks) from students;
++------------+
+| max(marks) |
++------------+
+|         98 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select * from students order by marks;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| ganesh | 105 | mumbai  |    73 |
+| arun   | 101 | kolkata |    78 |
+| harsha | 102 | vizag   |    84 |
+| rithik | 104 | delhi   |    98 |
++--------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from students order by marks desc;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| rithik | 104 | delhi   |    98 |
+| harsha | 102 | vizag   |    84 |
+| arun   | 101 | kolkata |    78 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from students where name like 'a%';
++------+-----+---------+-------+
+| name | id  | address | marks |
++------+-----+---------+-------+
+| arun | 101 | kolkata |    78 |
++------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from students where name like '%k';
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| rithik | 104 | delhi   |    98 |
++--------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from students where name like '_a%';
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| harsha | 102 | vizag   |    84 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from students where name like '%i_';
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| rithik | 104 | delhi   |    98 |
++--------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> show tables;
++-----------------------+
+| Tables_in_sqlpractise |
++-----------------------+
+| students              |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> create table employees(name varchar(30),id int not null primary key,salary varchar(10),empcode int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> show tables;
++-----------------------+
+| Tables_in_sqlpractise |
++-----------------------+
+| employees             |
+| students              |
++-----------------------+
+2 rows in set (0.00 sec)
+
+mysql> desc employees;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(30) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| salary  | varchar(10) | YES  |     | NULL    |       |
+| empcode | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into employees values('emp1',101,'54k',64580),('emp2',102,'50k',98152),('emp3',103,'39k',73745),('emp4',104,'78k',35586);
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++------+-----+--------+---------+
+| name | id  | salary | empcode |
++------+-----+--------+---------+
+| emp1 | 101 | 54k    |   64580 |
+| emp2 | 102 | 50k    |   98152 |
+| emp3 | 103 | 39k    |   73745 |
+| emp4 | 104 | 78k    |   35586 |
++------+-----+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from students;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| arun   | 101 | kolkata |    78 |
+| harsha | 102 | vizag   |    84 |
+| rithik | 104 | delhi   |    98 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from students inner join employees on students.id=employees.id;
++--------+-----+---------+-------+------+-----+--------+---------+
+| name   | id  | address | marks | name | id  | salary | empcode |
++--------+-----+---------+-------+------+-----+--------+---------+
+| arun   | 101 | kolkata |    78 | emp1 | 101 | 54k    |   64580 |
+| harsha | 102 | vizag   |    84 | emp2 | 102 | 50k    |   98152 |
+| rithik | 104 | delhi   |    98 | emp4 | 104 | 78k    |   35586 |
++--------+-----+---------+-------+------+-----+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employees inner join students on students.id=employees.id;
++------+-----+--------+---------+--------+-----+---------+-------+
+| name | id  | salary | empcode | name   | id  | address | marks |
++------+-----+--------+---------+--------+-----+---------+-------+
+| emp1 | 101 | 54k    |   64580 | arun   | 101 | kolkata |    78 |
+| emp2 | 102 | 50k    |   98152 | harsha | 102 | vizag   |    84 |
+| emp4 | 104 | 78k    |   35586 | rithik | 104 | delhi   |    98 |
++------+-----+--------+---------+--------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from students left join employees on students.id=employees.id;
++--------+-----+---------+-------+------+------+--------+---------+
+| name   | id  | address | marks | name | id   | salary | empcode |
++--------+-----+---------+-------+------+------+--------+---------+
+| arun   | 101 | kolkata |    78 | emp1 |  101 | 54k    |   64580 |
+| harsha | 102 | vizag   |    84 | emp2 |  102 | 50k    |   98152 |
+| rithik | 104 | delhi   |    98 | emp4 |  104 | 78k    |   35586 |
+| ganesh | 105 | mumbai  |    73 | NULL | NULL | NULL   |    NULL |
++--------+-----+---------+-------+------+------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from students right join employees on students.id=employees.id;
++--------+------+---------+-------+------+-----+--------+---------+
+| name   | id   | address | marks | name | id  | salary | empcode |
++--------+------+---------+-------+------+-----+--------+---------+
+| arun   |  101 | kolkata |    78 | emp1 | 101 | 54k    |   64580 |
+| harsha |  102 | vizag   |    84 | emp2 | 102 | 50k    |   98152 |
+| NULL   | NULL | NULL    |  NULL | emp3 | 103 | 39k    |   73745 |
+| rithik |  104 | delhi   |    98 | emp4 | 104 | 78k    |   35586 |
++--------+------+---------+-------+------+-----+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from students cross join employees;
++--------+-----+---------+-------+------+-----+--------+---------+
+| name   | id  | address | marks | name | id  | salary | empcode |
++--------+-----+---------+-------+------+-----+--------+---------+
+| ganesh | 105 | mumbai  |    73 | emp1 | 101 | 54k    |   64580 |
+| rithik | 104 | delhi   |    98 | emp1 | 101 | 54k    |   64580 |
+| harsha | 102 | vizag   |    84 | emp1 | 101 | 54k    |   64580 |
+| arun   | 101 | kolkata |    78 | emp1 | 101 | 54k    |   64580 |
+| ganesh | 105 | mumbai  |    73 | emp2 | 102 | 50k    |   98152 |
+| rithik | 104 | delhi   |    98 | emp2 | 102 | 50k    |   98152 |
+| harsha | 102 | vizag   |    84 | emp2 | 102 | 50k    |   98152 |
+| arun   | 101 | kolkata |    78 | emp2 | 102 | 50k    |   98152 |
+| ganesh | 105 | mumbai  |    73 | emp3 | 103 | 39k    |   73745 |
+| rithik | 104 | delhi   |    98 | emp3 | 103 | 39k    |   73745 |
+| harsha | 102 | vizag   |    84 | emp3 | 103 | 39k    |   73745 |
+| arun   | 101 | kolkata |    78 | emp3 | 103 | 39k    |   73745 |
+| ganesh | 105 | mumbai  |    73 | emp4 | 104 | 78k    |   35586 |
+| rithik | 104 | delhi   |    98 | emp4 | 104 | 78k    |   35586 |
+| harsha | 102 | vizag   |    84 | emp4 | 104 | 78k    |   35586 |
+| arun   | 101 | kolkata |    78 | emp4 | 104 | 78k    |   35586 |
++--------+-----+---------+-------+------+-----+--------+---------+
+16 rows in set (0.00 sec)
+
+mysql> show tables;
++-----------------------+
+| Tables_in_sqlpractise |
++-----------------------+
+| employees             |
+| students              |
++-----------------------+
+2 rows in set (0.00 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from students;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| arun   | 101 | kolkata |    78 |
+| harsha | 102 | vizag   |    84 |
+| rithik | 104 | delhi   |    98 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> delete from students where id=104;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from students;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| arun   | 101 | kolkata |    78 |
+| harsha | 102 | vizag   |    84 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from students;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| arun   | 101 | kolkata |    78 |
+| harsha | 102 | vizag   |    84 |
+| rithik | 104 | delhi   |    98 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> delete from students where id=104;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from students;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| arun   | 101 | kolkata |    78 |
+| harsha | 102 | vizag   |    84 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from students;
++--------+-----+---------+-------+
+| name   | id  | address | marks |
++--------+-----+---------+-------+
+| arun   | 101 | kolkata |    78 |
+| harsha | 102 | vizag   |    84 |
+| ganesh | 105 | mumbai  |    73 |
++--------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql>
